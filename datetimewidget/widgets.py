@@ -115,8 +115,11 @@ BOOTSTRAP_INPUT_TEMPLATE = {
            %(clear_button)s
            <span class="input-group-addon"><span class="glyphicon %(glyphicon)s"></span></span>
        </div>
-       <script type="text/javascript">
-           $("#%(id)s").datetimepicker({%(options)s}).find('input').addClass("form-control");
+       <script type="application/json" widgetData>
+		   {
+				"widgetID": "%(id)s",
+				"options": "%(options)s"
+			}	
        </script>
        """
        }
@@ -251,7 +254,7 @@ class PickerWidgetMixin(object):
 
     def _media(self):
 
-        js = ["js/bootstrap-datetimepicker.js"]
+        js = ["js/bootstrap-datetimepicker.js","js/fieldActivator.js"]
 
         language = self.options.get('language', 'en')
         if language != 'en':
