@@ -3,7 +3,6 @@ $(document).ready(function() {
 		raw_data = $(this).html;
 		if (raw_data.length > 0) {
 			data = JSON.parse($(this).html());
-			console.log(data.options);
 			if (data.bsVersion == "3") {
 				$("#" + data.widgetID).datetimepicker(data.options).find('input').addClass("form-control");
 			} else {
