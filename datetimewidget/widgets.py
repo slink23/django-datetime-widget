@@ -106,8 +106,12 @@ BOOTSTRAP_INPUT_TEMPLATE = {
            %(clear_button)s
            <span class="add-on"><i class="icon-th"></i></span>
        </div>
-       <script type="text/javascript">
-           $("#%(id)s").datetimepicker({%(options)s});
+       <script type="application/json" widgetData>
+		   {
+				"bsVersion": "2",
+				"widgetID": "%(id)s",
+				"options": %(options)s
+			}	
        </script>
        """,
     3: """
@@ -118,6 +122,7 @@ BOOTSTRAP_INPUT_TEMPLATE = {
        </div>
        <script type="application/json" widgetData>
 		   {
+				"bsVersion": "3",
 				"widgetID": "%(id)s",
 				"options": %(options)s
 			}	

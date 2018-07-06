@@ -4,7 +4,11 @@ $(document).ready(function() {
 		if (raw_data.length > 0) {
 			data = JSON.parse($(this).html());
 			console.log(data.options);
-			$("#" + data.widgetID).datetimepicker(data.options).find('input').addClass("form-control");
+			if (data.bsVersion == "3") {
+				$("#" + data.widgetID).datetimepicker(data.options).find('input').addClass("form-control");
+			} else {
+				$("#" + data.widgetID).datetimepicker(data.options);
+			}
 		}
 	});
 });
