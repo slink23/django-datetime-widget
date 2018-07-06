@@ -1,7 +1,10 @@
 $(document).ready(function() {
 	$('script[widgetData]').each(function() {
-		data = JSON.parse($(this).html());
-		$(this).html('');
-		$("#" + data.widgetID).datetimepicker({data.options}).find('input').addClass("form-control");
+		raw_data = $(this).html;
+		if (raw_data.length > 0) {
+			data = JSON.parse($(this).html());
+			console.log(data.options);
+			$("#" + data.widgetID).datetimepicker(data.options).find('input').addClass("form-control");
+		}
 	});
 });

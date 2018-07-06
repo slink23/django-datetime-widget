@@ -4,6 +4,7 @@ __author__ = 'Alfredo Saglimbeni'
 from datetime import datetime
 import re
 import uuid
+import json
 
 from django.forms import forms, widgets
 from django.forms.widgets import MultiWidget, DateTimeInput, DateInput, TimeInput
@@ -118,7 +119,7 @@ BOOTSTRAP_INPUT_TEMPLATE = {
        <script type="application/json" widgetData>
 		   {
 				"widgetID": "%(id)s",
-				"options": "%(options)s"
+				"options": %(options)s
 			}	
        </script>
        """
@@ -152,6 +153,12 @@ quoted_bool_options = set([
     'showMeridian',
     'clearBtn',
     ])
+	
+def convertToJS(value):
+    if value is "True" or value is "False":
+	    return value.lower()
+    else:
+	    return value
 
 
 def quote(key, value):
@@ -230,11 +237,11 @@ class PickerWidgetMixin(object):
         self.options.setdefault('autoclose', True)
 
         # Build javascript options out of python dictionary
-        options_list = []
+        options_list = {}
         for key, value in iter(self.options.items()):
-            options_list.append("%s: %s" % (key, quote(key, value)))
+            options_list[str(key)] = convertToJS(str(value))
 
-        js_options = ",\n".join(options_list)
+        js_options = json.dumps(options_list)
 
         # Use provided id or generate hex to avoid collisions in document
         id = final_attrs.get('id', uuid.uuid4().hex)
@@ -248,7 +255,7 @@ class PickerWidgetMixin(object):
                     rendered_widget=rendered_widget,
                     clear_button=CLEAR_BTN_TEMPLATE[self.bootstrap_version] if clearBtn else "",
                     glyphicon=self.glyphicon,
-                    options=js_options
+                    options=json.dumps(js_options)
                     )
         )
 
